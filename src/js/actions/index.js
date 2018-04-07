@@ -48,18 +48,24 @@ export const receivedCategories = categories => {
 
 export const votePost = makeActionCreator(actionConst.UP_DOWN_POST, 'post');
 
-export function upDownUpdate(dispatch, id, option) {
-  return fetch(`${actionConst.BASE_URI}/posts/${id}`, {headers: actionConst.AUTH, method: 'POST'})
-    .then(res => {
-      
-      return res.json();
-    })
-    .then(post => {
-      dispatch(votePost(post));
-    })
-    .catch(error => {
-      console.error(error);
-    });
+export function upDownUpdate(id, voteType) {
+  console.log(voteType);
+  return function(dispatch) {
+    return fetch(`${actionConst.BASE_URI}/posts/${id}`, {headers: actionConst.AUTH, method: 'POST', body: JSON.stringify({option:voteType})},{option:voteType})
+      .then(res => {
+        
+        return res.json();
+      })
+      .then(post => {
+        console.log(post);
+        dispatch(votePost(post));
+      }
+      )
+      .catch(error => {
+        console.error(error);
+      });
+
+  };
 }
 
 // thunk action creator:

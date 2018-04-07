@@ -6,18 +6,22 @@ function posts(state = [], action) {
   
   switch(action.type) {
     case actions.RECEIVE_POSTS:
-      state = [...action.posts];      
-      return state;
-    case actions.UP_DOWN_POST:
-      console.log(action.post);
+      const posts = action.posts.reduce((obj, post) => {        
+        obj[post.id] = post;
+        return obj;
+      },{});
+      
       return {
-        // broken, considering refactoring the state to be an object
-        // with each post.id as the key
-        // updating a post with my format is complex.
-        state.find((obj) => obj.id === action.post.id).vote++
-          
-        // [action.post.id]: action.post
+        ...state,
+        ...posts
       };
+
+    case actions.UP_DOWN_POST:
+      debugger;
+      return {
+        ...state,
+        [action.post.id]: action.post
+      };      
     default:
       return state;
   }  

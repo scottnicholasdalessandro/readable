@@ -11,6 +11,7 @@ class PostsContainer extends Component {
   }
 
   render() {
+    console.log(this.props.posts);
     return (
       <div>
         <PostsList posts={this.props.posts} />
@@ -22,14 +23,10 @@ class PostsContainer extends Component {
 const mapStateToProps = (state, ownProps) => {
   const category = ownProps.category;
   return {
-    posts: state.posts
-      .filter(post => {
-        if(category === 'All') {
-          return post;
-        } else if(post.category === category) {
-          return post;
-        }
-      })
+    posts: Object.keys(state.posts)
+      // if either returns true, the id is added to the filter array, then map over the filter array to add object values
+      .filter(postID => (category === 'All' ? state.posts[postID] : state.posts[postID].category === category))
+      .map(post => state.posts[post])    
   };
 };
 
