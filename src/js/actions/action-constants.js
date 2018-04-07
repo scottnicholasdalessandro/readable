@@ -16,4 +16,4 @@ export const REQUEST_BY_CATEGORY = 'REQUEST_BY_CATEGORY';
 export const UP_DOWN_POST = 'UP_DOWN_POST';
 
 export const BASE_URI = 'http://localhost:3001';
-export const AUTH = {Authorization: 'hello-world'};
+export const AUTH = {Authorization: 'hello-world', Accept: 'application/json', 'Content-Type': 'application/json'};
