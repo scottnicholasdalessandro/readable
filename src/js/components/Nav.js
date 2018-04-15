@@ -1,18 +1,20 @@
 import React from 'react';
-// import {NavLink} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
-// function Nav(props) {
-//   return (
-//     <ul className="nav bg-dark">
-//       <li className="nav-item">
-        
-//       </li>
-//     </ul>
-//   );
-// }
+function Nav(props) {
+  return (
+    // <div className="header bg-dark">
+    <div>
+      <h1 className="header">Readable</h1>
+      <NavLink className="nav-link" to="/post/create">
+        <button className="btn-primary">Create Post</button>
+      </NavLink>
+      </div>
+    // </div>
+  );
+}
 
-// export default Nav;
-
+export default Nav;
 
 // <NavLink className="nav-link" to="/" activeClassName="active">
 //           Active

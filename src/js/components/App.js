@@ -4,12 +4,14 @@ import PostsViewer from '../components/PostsViewer';
 import CategoryPicker from './Categories/CategoryPicker';
 import {fetchCategory, fetchPosts} from '../actions';
 import {withRouter} from 'react-router';
+import Nav from './Nav';
 
 class App extends Component {
   render() {
     
     return (
       <div>
+        <Nav />
         <CategoryPicker />
         <PostsViewer category={this.props.match.params} />
       </div>

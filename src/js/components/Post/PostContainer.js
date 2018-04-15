@@ -6,14 +6,15 @@ import Post from './Post';
 import {connect} from 'react-redux';
 
 class PostContainer extends Component {
-  componentDidMount() {    
+  componentDidMount() {  
     const {id} = this.props.match.params;
     this.props.dispatch(fetchPost(id));
   }
-  render() {    
+  render() {  
+    
     return (
       
-      <Post post={this.props.post} />
+      <Post post={this.props.post}/>
         
     );
   }
@@ -21,6 +22,7 @@ class PostContainer extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    ...ownProps,
     post: state.post
   };
 };

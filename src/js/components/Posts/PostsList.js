@@ -2,12 +2,12 @@ import React from 'react';
 import Post from '../Post';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {fetchPosts} from '../../actions';
+// import {fetchPosts} from '../../actions';
 
 const PostsList = ({posts}) => {
   
   {
-    return posts.length > 0 && posts.map(post => <Post key={post.id} post={post} />);
+    return posts.length > 0 && posts.map(post => <Post key={post.id} post={post}/>);
   }
 };
 

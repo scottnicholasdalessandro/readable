@@ -7,20 +7,20 @@ class CategoryPicker extends Component {
   constructor(props) {
     super(props);
     this.handleCategory = this.handleCategory.bind(this);
-    this.state = {
-      value: this.props.match.params.category
-    };
   }
+
+  state = {
+    value: this.props.match.params.category
+  };
   componentDidMount() {
     this.props.dispatch(fetchCategories());
-    
   }
   handleCategory(e) {
     this.props.history.push(`/${e.target.value}`);
     this.setState({value: e.target.value});
   }
+
   render() {
-    
     return (
       <div>
         <select onChange={this.handleCategory} value={this.state.value}>
