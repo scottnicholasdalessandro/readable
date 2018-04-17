@@ -1,4 +1,4 @@
-function posts(state = [], action) {
+function posts(state = {}, action) {
   switch(action.type) {
     case 'RECEIVE_POST':      
       state = action.post;      

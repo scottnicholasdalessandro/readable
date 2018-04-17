@@ -2,23 +2,25 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import {fetchPost} from '../../actions';
 import Post from './Post';
+import PropTypes from 'prop-types';
 
 import {connect} from 'react-redux';
 
 class PostContainer extends Component {
-  componentDidMount() {  
+  componentDidMount() {
     const {id} = this.props.match.params;
     this.props.dispatch(fetchPost(id));
   }
-  render() {  
-    
+  render() {
     return (
-      
-      <Post post={this.props.post}/>
-        
+      <Post post={this.props.post} editing={this.props.location.state ? this.props.location.state.editing : false} />
     );
   }
 }
+
+PostContainer.propTypes = {
+  post: PropTypes.object
+};
 
 const mapStateToProps = (state, ownProps) => {
   return {

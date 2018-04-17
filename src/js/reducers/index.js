@@ -4,6 +4,7 @@ import posts from './posts';
 import post from './post';
 import categories from './categories';
 import comments from './comments';
+import sortVals from './sortVals';
 
 
 
@@ -11,5 +12,6 @@ export default combineReducers({
   posts,
   post,
   categories,
-  comments
+  comments,
+  sortVals
 });

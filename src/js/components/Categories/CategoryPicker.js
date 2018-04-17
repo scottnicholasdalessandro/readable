@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {fetchCategories} from '../../actions';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
+import PropTypes from 'prop-types';
 
 class CategoryPicker extends Component {
   constructor(props) {
@@ -35,10 +36,17 @@ class CategoryPicker extends Component {
   }
 }
 
+CategoryPicker.propTypes = {
+  categories: PropTypes.array
+};
+
+
+
 const mapStateToProps = (state, ownProps) => {
   return {
     categories: state.categories
   };
 };
+
 
 export default connect(mapStateToProps)(withRouter(CategoryPicker));

@@ -16,13 +16,16 @@ export const REQUEST_CATEGORIES = 'REQUEST_CATEGORIES';
 
 export const REQUEST_BY_CATEGORY = 'REQUEST_BY_CATEGORY';
 
-
 export const UP_DOWN_POST = 'UP_DOWN_POST';
 
-
+export const SORT_VALUES = 'SORT_VALUES';
 
 export const FETCH_COMMENTS = 'FETCH_COMMENTS';
 export const RECEIVED_COMMENTS = 'RECEIVED_COMMENTS';
+export const UPDATE_COMMENT = 'UPDATE_COMMENT';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const CREATE_COMMENT = 'CREATE_COMMENT';
+export const UP_DOWN_COMMENT = 'UP_DOWN_COMMENT';
 
 export const BASE_URI = 'http://localhost:3001';
-export const AUTH = {Authorization: 's', Accept: 'application/json', 'Content-Type': 'application/json'};
+export const AUTH = {Authorization: '00', Accept: 'application/json', 'Content-Type': 'application/json'};

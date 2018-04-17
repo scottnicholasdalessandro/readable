@@ -1,6 +1,13 @@
 import * as actionConst from './action-constants.js';
 import makeActionCreator from './makeActionCreator.js';
 
+export function sortValues(value) {
+  return {
+    type: actionConst.SORT_VALUES,
+    value
+  };
+}
+
 // gets all posts, i might want to only request by category
 export function requestPosts() {
   return {
@@ -48,23 +55,38 @@ export const receivedCategories = categories => {
 
 // UP_DOWN_VOTE
 
-export const votePost = makeActionCreator(actionConst.UP_DOWN_POST, 'post');
+export const scorePost = makeActionCreator(actionConst.UP_DOWN_POST, 'post');
+export const scoreComment = makeActionCreator(actionConst.UP_DOWN_COMMENT, 'comment');
 
-export function upDownUpdate(id, voteType) {
-  console.log(voteType);
+export function upDownUpdate(id, direction, scoreType ) {  
   return function(dispatch) {
-    return fetch(
-      `${actionConst.BASE_URI}/posts/${id}`,
-      {headers: actionConst.AUTH, method: 'POST', body: JSON.stringify({option: voteType})},
-      {option: voteType}
-    )
-      .then(res => {
-        return res.json();
-      })
-      .then(post => dispatch(votePost(post)))
-      .catch(error => {
-        console.error(error);
-      });
+    if(scoreType === 'post') {
+      return fetch(
+        `${actionConst.BASE_URI}/posts/${id}`,
+        {headers: actionConst.AUTH, method: 'POST', body: JSON.stringify({option: direction})},
+        {option: direction}
+      )
+        .then(res => {
+          return res.json();
+        })
+        .then(post => dispatch(scorePost(post)))
+        .catch(error => {
+          console.error(error);
+        });
+    } else {
+      return fetch(
+        `${actionConst.BASE_URI}/comments/${id}`,
+        {headers: actionConst.AUTH, method: 'POST', body: JSON.stringify({option: direction})},
+        {option: direction}
+      )
+        .then(res => {
+          return res.json();
+        })
+        .then(comment => dispatch(scoreComment(comment)))
+        .catch(error => {
+          console.error(error);
+        });
+    }
   };
 }
 
@@ -98,7 +120,7 @@ export const updatePost = makeActionCreator(actionConst.UPDATE_POST, 'post');
 
 export function updatePostAPI(postInfo) {
   return function(dispatch) {
-    return fetch(`${actionConst.BASE_URI}/posts`, {
+    return fetch(`${actionConst.BASE_URI}/posts/${postInfo.id}`, {
       headers: actionConst.AUTH,
       method: 'PUT',
       body: JSON.stringify(postInfo)
@@ -111,7 +133,25 @@ export function updatePostAPI(postInfo) {
 
 export const fetchComments = makeActionCreator(actionConst.FETCH_COMMENTS, 'comments');
 export const receivedComments = makeActionCreator(actionConst.RECEIVED_COMMENTS, 'comments', 'postID');
+export const createComment = makeActionCreator(actionConst.CREATE_COMMENT, 'comments');
+export const updateComment = makeActionCreator(actionConst.UPDATE_COMMENT, 'comments');
+export const deleteComment = makeActionCreator(actionConst.DELETE_COMMENT, 'comments');
 
+export function deleteCommentAPI(comment) {
+  return function(dispatch) {
+    debugger;
+    return fetch(`${actionConst.BASE_URI}/comments/${comment}`, {
+      headers: actionConst.AUTH,
+      method: 'DELETE'
+    })
+      .then(res => res.json())
+      .then(data => {
+        debugger;
+        dispatch(deleteComment(comment));
+      })
+      .catch(error => console.error(error));
+  };
+}
 export function fetchCommentsAPI(postID) {
   return function(dispatch) {
     dispatch(fetchComments(postID));
@@ -119,6 +159,39 @@ export function fetchCommentsAPI(postID) {
     return fetch(`${actionConst.BASE_URI}/posts/${postID}/comments`, {headers: actionConst.AUTH, method: 'GET'})
       .then(res => res.json())
       .then(data => dispatch(receivedComments(data, postID)))
+      .catch(error => console.error(error));
+  };
+}
+
+export function updateCommentAPI(commentInfo) {
+  const {body, timestamp} = commentInfo;
+  return function(dispatch) {
+    debugger;
+    return fetch(`${actionConst.BASE_URI}/comments/${commentInfo.id}`, {
+      headers: actionConst.AUTH,
+      method: 'PUT',
+      body: JSON.stringify(commentInfo)
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        debugger;
+        dispatch(updateComment(data));
+      })
+      .catch(error => console.error(error));
+  };
+}
+
+export function createCommentAPI(newComment) {
+  return function(dispatch) {
+    console.log(newComment);
+    return fetch(`${actionConst.BASE_URI}/comments`, {
+      headers: actionConst.AUTH,
+      method: 'POST',
+      body: JSON.stringify(newComment)
+    })
+      .then(res => res.json())
+      .then(data => dispatch(createComment(data)))
       .catch(error => console.error(error));
   };
 }
@@ -160,15 +233,3 @@ export function fetchCategories() {
       .then(json => dispatch(receivedCategories(json.categories)));
   };
 }
-
-// export const fetchCategory = category => {
-//   return function(dispatch) {
-//     dispatch(requestCategory());
-
-//     return fetch(`${actionConst.BASE_URI}/${category}/posts`, {headers: actionConst.AUTH, method: 'GET'})
-//       .then(res => {
-//         return res.json();
-//       })
-//       .then(json => dispatch(receivePosts(json)));
-//   };
-// };
