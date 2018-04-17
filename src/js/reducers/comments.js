@@ -1,7 +1,7 @@
 import * as actions from '../actions/action-constants';
-function comments(state = {}, action) {
-  
+function comments(state = {}, action) {  
   switch (action.type) {
+    
     case actions.RECEIVED_COMMENTS: 
       state = action.comments.reduce((final, comment) => {
         final[comment.id] = comment;

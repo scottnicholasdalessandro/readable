@@ -27,5 +27,8 @@ export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const UP_DOWN_COMMENT = 'UP_DOWN_COMMENT';
 
+export const REMOVE_POST_COMMENT = 'REMOVE_POST_COMMENT';
+export const ADD_POST_COMMENT = 'ADD_POST_COMMENT';
+
 export const BASE_URI = 'http://localhost:3001';
 export const AUTH = {Authorization: '00', Accept: 'application/json', 'Content-Type': 'application/json'};

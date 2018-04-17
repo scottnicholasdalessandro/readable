@@ -18,9 +18,7 @@ class PostContainer extends Component {
   }
 }
 
-PostContainer.propTypes = {
-  post: PropTypes.object
-};
+
 
 const mapStateToProps = (state, ownProps) => {
   return {

@@ -33,8 +33,4 @@ const Posts = props => {
   );
 };
 
-Post.propTypes = {
-  post: PropTypes.object.isRequired
-}
-
 export default connect()(Posts);

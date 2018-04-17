@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {createCommentAPI, updateCommentAPI} from '../../actions/index';
 
 class CommentEditForm extends Component {
-  
+  debugger;
   componentDidUpdate(prevProps) {
     if(this.props.parentIdPost !== prevProps.parentIdPost) {
       this.setState({

@@ -58,9 +58,9 @@ export const receivedCategories = categories => {
 export const scorePost = makeActionCreator(actionConst.UP_DOWN_POST, 'post');
 export const scoreComment = makeActionCreator(actionConst.UP_DOWN_COMMENT, 'comment');
 
-export function upDownUpdate(id, direction, scoreType ) {  
+export function upDownUpdate(id, direction, scoreType) {
   return function(dispatch) {
-    if(scoreType === 'post') {
+    if (scoreType === 'post') {
       return fetch(
         `${actionConst.BASE_URI}/posts/${id}`,
         {headers: actionConst.AUTH, method: 'POST', body: JSON.stringify({option: direction})},
@@ -90,8 +90,6 @@ export function upDownUpdate(id, direction, scoreType ) {
   };
 }
 
-export const deletePost = makeActionCreator(actionConst.DELETE_POST, 'post');
-
 export function deletePostAPI(postID) {
   return function(dispatch) {
     return fetch(`${actionConst.BASE_URI}/posts/${postID}`, {headers: actionConst.AUTH, method: 'DELETE'})
@@ -102,6 +100,10 @@ export function deletePostAPI(postID) {
 }
 
 export const createPost = makeActionCreator(actionConst.CREATE_POST, 'post');
+export const updatePost = makeActionCreator(actionConst.UPDATE_POST, 'post');
+export const deletePost = makeActionCreator(actionConst.DELETE_POST, 'post');
+export const addPostComment = makeActionCreator(actionConst.ADD_POST_COMMENT, 'parentId');
+export const removePostComment = makeActionCreator(actionConst.REMOVE_POST_COMMENT, 'parentId');
 
 export function createPostAPI(postInfo) {
   return function(dispatch) {
@@ -115,8 +117,6 @@ export function createPostAPI(postInfo) {
       .catch(error => console.error(error));
   };
 }
-
-export const updatePost = makeActionCreator(actionConst.UPDATE_POST, 'post');
 
 export function updatePostAPI(postInfo) {
   return function(dispatch) {
@@ -146,7 +146,7 @@ export function deleteCommentAPI(comment) {
     })
       .then(res => res.json())
       .then(data => {
-        debugger;
+        dispatch(removePostComment(comment.parentId));
         dispatch(deleteComment(comment));
       })
       .catch(error => console.error(error));
@@ -174,24 +174,25 @@ export function updateCommentAPI(commentInfo) {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
-        debugger;
-        dispatch(updateComment(data));
+        dispatch(updateComment(data));        
       })
       .catch(error => console.error(error));
   };
 }
 
 export function createCommentAPI(newComment) {
-  return function(dispatch) {
-    console.log(newComment);
+  return function(dispatch) {    
     return fetch(`${actionConst.BASE_URI}/comments`, {
       headers: actionConst.AUTH,
       method: 'POST',
       body: JSON.stringify(newComment)
     })
       .then(res => res.json())
-      .then(data => dispatch(createComment(data)))
+      .then(data => {
+        dispatch(addPostComment(data.parentId));
+        dispatch(createComment(data));
+        
+      })
       .catch(error => console.error(error));
   };
 }

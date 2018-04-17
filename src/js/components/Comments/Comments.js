@@ -40,10 +40,10 @@ Comments.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  console.log(state.comments);
   return {
     post: ownProps.post,
-    comments: Object.keys(state.comments).map(comment => state.comments[comment])
+    comments: Object.keys(state.comments).map(comment => state.comments[comment]),
+    posts: state.posts
   };
 }
 

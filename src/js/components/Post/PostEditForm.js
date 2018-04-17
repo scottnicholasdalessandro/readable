@@ -49,24 +49,24 @@ class PostEditForm extends Component {
     const post = {
       ...this.state
     };
-
     if (this.state.editing) {
       this.props.dispatch(updatePostAPI(post));
       this.setState({
         editing: false
       });
+      this.props.editToggle();
     } else {
       this.props.dispatch(createPostAPI(post));
       this.clearFormInfo();
       window.location.href = `/${post.category}/${post.id}`;
     }
   };
-  render() {
+  render() {    
     const {editing} = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
         <div>
-          <h2>Create New Post</h2>
+          <h2>{`${editing ? 'Edit' : 'Create'}  Post`}</h2>
           <label htmlFor="text">
             Title:
             <input
@@ -114,14 +114,19 @@ class PostEditForm extends Component {
             <option value="udacity">udacity</option>
           </select>
         </label>
-        <button type="submit">Create Post</button>
+        <button type="submit">{`${editing ? 'Edit' : 'Create'} Post `} </button>
       </form>
     );
   }
 }
 
-PostEditForm.propTypes = {
-  post: PropTypes.object
-};
+function mapStateToProps(state, ownProps) {  
+  return {
+    posts: state.posts,
+    post: state.post,
+    ...ownProps
+    
+  };
+}
 
-export default connect()(PostEditForm);
+export default connect(mapStateToProps)(PostEditForm);

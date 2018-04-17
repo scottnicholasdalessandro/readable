@@ -23,7 +23,7 @@ class CategoryPicker extends Component {
 
   render() {
     return (
-      <div>
+      <div> <span>Select Category: </span>
         <select onChange={this.handleCategory} value={this.state.value}>
           {this.props.categories.map(category => (
             <option value={category.path} key={category.name}>
