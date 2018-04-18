@@ -113,7 +113,10 @@ export function createPostAPI(postInfo) {
       body: JSON.stringify(postInfo)
     })
       .then(res => res.json())
-      .then(data => dispatch(createPost(postInfo)))
+      .then(data => {  
+        debugger;              
+        dispatch(createPost(data));
+      })
       .catch(error => console.error(error));
   };
 }
@@ -131,7 +134,6 @@ export function updatePostAPI(postInfo) {
   };
 }
 
-export const fetchComments = makeActionCreator(actionConst.FETCH_COMMENTS, 'comments');
 export const receivedComments = makeActionCreator(actionConst.RECEIVED_COMMENTS, 'comments', 'postID');
 export const createComment = makeActionCreator(actionConst.CREATE_COMMENT, 'comments');
 export const updateComment = makeActionCreator(actionConst.UPDATE_COMMENT, 'comments');
@@ -154,8 +156,6 @@ export function deleteCommentAPI(comment) {
 }
 export function fetchCommentsAPI(postID) {
   return function(dispatch) {
-    dispatch(fetchComments(postID));
-
     return fetch(`${actionConst.BASE_URI}/posts/${postID}/comments`, {headers: actionConst.AUTH, method: 'GET'})
       .then(res => res.json())
       .then(data => dispatch(receivedComments(data, postID)))
@@ -174,14 +174,14 @@ export function updateCommentAPI(commentInfo) {
     })
       .then(res => res.json())
       .then(data => {
-        dispatch(updateComment(data));        
+        dispatch(updateComment(data));
       })
       .catch(error => console.error(error));
   };
 }
 
 export function createCommentAPI(newComment) {
-  return function(dispatch) {    
+  return function(dispatch) {
     return fetch(`${actionConst.BASE_URI}/comments`, {
       headers: actionConst.AUTH,
       method: 'POST',
@@ -191,7 +191,6 @@ export function createCommentAPI(newComment) {
       .then(data => {
         dispatch(addPostComment(data.parentId));
         dispatch(createComment(data));
-        
       })
       .catch(error => console.error(error));
   };

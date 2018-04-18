@@ -3,21 +3,22 @@ import uuid from 'uuid';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {createPostAPI, updatePostAPI} from '../../actions/index';
-
+import {withRouter} from 'react-router';
 class PostEditForm extends Component {
-  componentWillReceiveProps(prevProps) {
-    if (this.props.post.id !== prevProps.post.id) {
-      this.setState({
-        timestamp: prevProps.post.timestamp,
-        editing: prevProps.post.editing,
-        title: prevProps.post.title,
-        category: prevProps.post.category,
-        author: prevProps.post.author,
-        id: prevProps.post.id,
-        body: prevProps.post.body
-      });
-    }
-  }
+  // componentWillReceiveProps(prevProps) {
+  //   if (this.props.post.id !== prevProps.post.id) {
+  //     this.setState({
+  //       timestamp: prevProps.post.timestamp,
+
+  //       editing: prevProps.post.editing,
+  //       title: prevProps.post.title,
+  //       category: prevProps.post.category,
+  //       author: prevProps.post.author,
+  //       id: prevProps.post.id,
+  //       body: prevProps.post.body
+  //     });
+  //   }
+  // }
   state = {
     timestamp: this.props.post.timestamp || Date.now(),
     editing: this.props.editing || false,
@@ -45,7 +46,9 @@ class PostEditForm extends Component {
   };
 
   handleSubmit = event => {
+
     event.preventDefault();
+    debugger;
     const post = {
       ...this.state
     };
@@ -58,7 +61,11 @@ class PostEditForm extends Component {
     } else {
       this.props.dispatch(createPostAPI(post));
       this.clearFormInfo();
-      window.location.href = `/${post.category}/${post.id}`;
+      debugger;
+      this.props.history.push( `/${post.category}/${post.id}`);
+
+
+      // window.location.href = `/${post.category}/${post.id}`;
     }
   };
   render() {    
@@ -120,13 +127,7 @@ class PostEditForm extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {  
-  return {
-    posts: state.posts,
-    post: state.post,
-    ...ownProps
-    
-  };
-}
 
-export default connect(mapStateToProps)(PostEditForm);
+// connecting so I can dispatch actions...is it better to pass dispatch down from
+// the parent component?
+export default connect()(withRouter(PostEditForm));

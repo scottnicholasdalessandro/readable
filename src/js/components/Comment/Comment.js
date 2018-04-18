@@ -50,4 +50,12 @@ Comment.propTypes = {
   comment: PropTypes.object
 };
 
-export default connect()(Comment);
+function mapStateToProps(state, ownProps) {  
+  debugger;
+  return {    
+    post: state.post,
+    ...ownProps    
+  };
+}
+
+export default connect(mapStateToProps)(Comment);

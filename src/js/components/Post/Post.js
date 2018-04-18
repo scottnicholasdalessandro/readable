@@ -28,7 +28,7 @@ class Post extends Component {
   render() {
     debugger;
     const {editing} = this.state;
-    if (editing || this.props.post === undefined) {
+    if (editing || !this.props.post) {
       
       return <PostEditForm editToggle={this.editToggle} editing={this.state.editing} post={this.props.post || {}}></PostEditForm>;
     }
@@ -61,8 +61,13 @@ class Post extends Component {
 
 
 function mapStateToProps(state, ownProps){
+  debugger;
   return {
-    post: state.post
+    posts: state.post,    
+    ...ownProps
   };
 }
+
+
+
 export default connect(mapStateToProps)(withRouter(Post));

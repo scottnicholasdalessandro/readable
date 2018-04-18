@@ -7,42 +7,38 @@ import {createCommentAPI, updateCommentAPI} from '../../actions/index';
 class CommentEditForm extends Component {
   debugger;
   componentDidUpdate(prevProps) {
-    if(this.props.parentIdPost !== prevProps.parentIdPost) {
+    if (this.props.parentIdPost !== prevProps.parentIdPost) {
       this.setState({
         parentId: this.props.parentIdPost
-      });   
+      });
     }
   }
 
-
-/* this.props.parentIdPost is not updating properly, the initial render is
+  /* this.props.parentIdPost is not updating properly, the initial render is
 undefined */
-// can possible use withRouter and take the url.
+  // can possible use withRouter and take the url.
 
   state = {
-    
     id: this.props.comment.id || uuid(),
     timestamp: this.props.comment.timestamp || Date.now(),
     body: this.props.comment.body || '',
     author: this.props.comment.author || '',
     parentId: this.props.comment.parentId || this.props.parentIdPost,
     editing: this.props.editing || false
-    
   };
 
   clearFormInfo = () => {
     this.setState({
       timestamp: Date.now(),
       body: '',
-      title: '',
-      parentId: '',
+      title: '',      
       author: '',
       id: uuid(),
       editing: false
     });
   };
-  
-  handleOnChange = (e) => {
+
+  handleOnChange = e => {
     this.setState({[e.target.id]: e.target.value});
   };
 
@@ -51,23 +47,22 @@ undefined */
     const comment = {
       ...this.state
     };
-        
-    if(this.state.editing) {
+
+    if (this.state.editing) {
       this.props.dispatch(updateCommentAPI(comment));
       this.props.switchToEdit();
-      
     } else {
       delete comment.editing;
       this.props.dispatch(createCommentAPI(comment));
       this.clearFormInfo();
-    }    
+    }
   };
-  render() {    
+  render() {
     const {editing} = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
         <div>
-          <h3>{`${editing ? 'Edit': 'Create'} Comment`}</h3>         
+          <h3>{`${editing ? 'Edit' : 'Create'} Comment`}</h3>
           <label>
             Author:
             <input
@@ -80,9 +75,7 @@ undefined */
               name="author"
             />
           </label>
-          <label>
-
-          </label>
+          <label />
           <label>
             Body:
             <textarea
@@ -95,12 +88,18 @@ undefined */
               name="body"
             />
           </label>
-        </div>        
-      <button type='submit'>{`${editing ? 'Edit': 'Create'} Comment`}</button>
+        </div>
+        <button type="submit">{`${editing ? 'Edit' : 'Create'} Comment`}</button>
       </form>
     );
   }
 }
+// function mapStateToProps(state, ownProps) {
+//   debugger;
+//   return {    
+//     post: state.post,
+//     ...ownProps
+//   };
+// }
 
-
-export default connect()(CommentEditForm);
+export default CommentEditForm;
