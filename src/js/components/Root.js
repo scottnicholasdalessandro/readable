@@ -7,16 +7,18 @@ import Post from './Post/Post';
 import PostContainer from './Post/PostContainer';
 import PostEditForm from './Post/PostEditForm';
 import Nav from './Nav';
+import FourOhFour from './FourOhFour';
 
 const Root = ({store}) => (
   <Provider store={store}>
     <Router>
       <div>
-      <Nav></Nav>
+        <Nav />
         <Switch>
+          <Route exact path="/:category?" exact component={App} />
           <Route exact path="/post/create" component={Post} />
-          <Route exact path="/:category?" component={App} />
           <Route exact path="/:category/:id" component={PostContainer} />
+          <Route component={FourOhFour} />
         </Switch>
       </div>
     </Router>
