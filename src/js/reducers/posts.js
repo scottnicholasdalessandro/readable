@@ -7,26 +7,23 @@ function post(state = undefined, action) {
       return state;
     case actions.CREATE_POST:
       return {
-        
         ...action.post
       };
-      
-    
-    case actions.ADD_POST_COMMENT:      
+
+    case actions.ADD_POST_COMMENT:
       return {
         ...state,
         commentCount: state.commentCount + 1
       };
     case actions.REMOVE_POST_COMMENT:
       return {
-        ...state,      
-          commentCount: state.commentCount - 1
-        };      
+        ...state,
+        commentCount: state.commentCount - 1
+      };
     default:
       return state;
   }
 }
-
 
 function posts(state = {}, action) {
   switch (action.type) {
@@ -47,24 +44,22 @@ function posts(state = {}, action) {
       };
 
     case actions.CREATE_POST:
-      debugger;
-      // const newPost = post(undefined, action);
       const newPost = action.post;
-      console.log(state);
-      console.log(newPost);
       return {
         ...state,
-        ...newPost          
+        [newPost.id]: newPost
       };
 
     case actions.UPDATE_POST:
       return {
         ...state,
-        ...action.post
+        [action.post.id]: {
+          ...state[action.post.id],
+          ...action.post
+        }
       };
 
-    case actions.ADD_POST_COMMENT:
-    debugger;
+    case actions.ADD_POST_COMMENT:      
       return {
         ...state,
         [action.parentId]: {

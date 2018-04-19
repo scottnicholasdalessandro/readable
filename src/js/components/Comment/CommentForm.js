@@ -5,19 +5,7 @@ import {connect} from 'react-redux';
 import {createCommentAPI, updateCommentAPI} from '../../actions/index';
 
 class CommentEditForm extends Component {
-  debugger;
-  componentDidUpdate(prevProps) {
-    if (this.props.parentIdPost !== prevProps.parentIdPost) {
-      this.setState({
-        parentId: this.props.parentIdPost
-      });
-    }
-  }
-
-  /* this.props.parentIdPost is not updating properly, the initial render is
-undefined */
-  // can possible use withRouter and take the url.
-
+ 
   state = {
     id: this.props.comment.id || uuid(),
     timestamp: this.props.comment.timestamp || Date.now(),
@@ -31,7 +19,7 @@ undefined */
     this.setState({
       timestamp: Date.now(),
       body: '',
-      title: '',      
+      title: '',
       author: '',
       id: uuid(),
       editing: false
@@ -94,12 +82,5 @@ undefined */
     );
   }
 }
-// function mapStateToProps(state, ownProps) {
-//   debugger;
-//   return {    
-//     post: state.post,
-//     ...ownProps
-//   };
-// }
 
-export default CommentEditForm;
+export default connect()(CommentEditForm);

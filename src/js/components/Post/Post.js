@@ -6,14 +6,15 @@ import Comments from '../Comments/Comments';
 import {distanceInWordsToNow} from 'date-fns';
 import {deletePostAPI} from '../../actions/index';
 import {connect} from 'react-redux';
+import UpDown from '../UpDown';
 
 class Post extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.editToggle = this.editToggle.bind(this);
   }
   state = {
-    editing: this.props.location.state ? this.props.location.state.editing : false
+    editing: false
   };
 
   editToggle() {
@@ -21,7 +22,7 @@ class Post extends Component {
   }
 
   deletePost() {
-    this.props.dispatch(deletePostAPI(this.props.post.id));
+    this.props.dispatch(deletePostAPI(this.props.post.id)); // is it better to add this to my post container and pass it down? without this action, Post is mostly a presentational component
     window.location.href = `/`;
   }
 
@@ -29,8 +30,7 @@ class Post extends Component {
     debugger;
     const {editing} = this.state;
     if (editing || !this.props.post) {
-      
-      return <PostEditForm editToggle={this.editToggle} editing={this.state.editing} post={this.props.post || {}}></PostEditForm>;
+      return <PostEditForm editToggle={this.editToggle} editing={this.state.editing} post={this.props.post || {}} />;
     }
     return (
       <div>
@@ -42,9 +42,11 @@ class Post extends Component {
           <br />
           <span>Comments: {this.props.post.commentCount}</span>
           <br />
-          <span>Score: {this.props.post.voteScore}</span>
+          
+          <span>Score: {this.props.post.voteScore}</span> <span><UpDown id={this.props.post.id} scoreType='post' score={this.props.post.voteScore}></UpDown></span>
           <br />
           <p>Body: {this.props.post.body}</p>
+          
           <button type="button" className="btn btn-primary" onClick={() => this.editToggle()}>
             Make Edit
           </button>
@@ -59,15 +61,11 @@ class Post extends Component {
   }
 }
 
-
-function mapStateToProps(state, ownProps){
-  debugger;
+function mapStateToProps(state, ownProps) {
   return {
-    posts: state.post,    
+    posts: state.posts,
     ...ownProps
   };
 }
-
-
 
 export default connect(mapStateToProps)(withRouter(Post));

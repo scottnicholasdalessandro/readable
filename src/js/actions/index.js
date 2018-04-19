@@ -135,14 +135,14 @@ export function updatePostAPI(postInfo) {
 }
 
 export const receivedComments = makeActionCreator(actionConst.RECEIVED_COMMENTS, 'comments', 'postID');
-export const createComment = makeActionCreator(actionConst.CREATE_COMMENT, 'comments');
-export const updateComment = makeActionCreator(actionConst.UPDATE_COMMENT, 'comments');
-export const deleteComment = makeActionCreator(actionConst.DELETE_COMMENT, 'comments');
+export const createComment = makeActionCreator(actionConst.CREATE_COMMENT, 'comment');
+export const updateComment = makeActionCreator(actionConst.UPDATE_COMMENT, 'comment');
+export const deleteComment = makeActionCreator(actionConst.DELETE_COMMENT, 'comment');
 
 export function deleteCommentAPI(comment) {
   return function(dispatch) {
     debugger;
-    return fetch(`${actionConst.BASE_URI}/comments/${comment}`, {
+    return fetch(`${actionConst.BASE_URI}/comments/${comment.id}`, {
       headers: actionConst.AUTH,
       method: 'DELETE'
     })

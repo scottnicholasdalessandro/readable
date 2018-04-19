@@ -23,19 +23,16 @@ class Comment extends Component {
     const {comment} = this.props;
     const {editing} = this.state;
 
-
-    if(editing) {
-      return (
-        <CommentEditForm comment={comment} switchToEdit={this.switchToEdit} editing></CommentEditForm>
-      );
+    if (editing) {
+      return <CommentEditForm comment={comment} switchToEdit={this.switchToEdit} editing />;
     }
     return (
       <div>
         <span> Author: {comment.author}</span>
         <span> VoteScore: {comment.voteScore}</span>
         <p> Body: {comment.body} </p>
-        <UpDown id={comment.id} score={comment.voteScore} scoreType='comment'></UpDown>
-        <button onClick={() => this.props.dispatch(deleteCommentAPI(comment.id))}>
+        <UpDown id={comment.id} score={comment.voteScore} scoreType="comment" />
+        <button onClick={() => this.props.dispatch(deleteCommentAPI(comment))}>
           <i className="material-icons md-18">remove_circle_outline</i>
         </button>
         <button onClick={() => this.switchToEdit()}>
@@ -50,12 +47,12 @@ Comment.propTypes = {
   comment: PropTypes.object
 };
 
-function mapStateToProps(state, ownProps) {  
-  debugger;
-  return {    
-    post: state.post,
-    ...ownProps    
-  };
-}
+// function mapStateToProps(state, ownProps) {
+//   debugger;
+//   return {
+//     post: state.post,
+//     ...ownProps
+//   };
+// }
 
-export default connect(mapStateToProps)(Comment);
+export default connect()(Comment);

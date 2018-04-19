@@ -8,9 +8,10 @@ import {connect} from 'react-redux';
 
 class PostContainer extends Component {
   
-  // componentDidMount() {    
-  //   this.props.dispatch(fetchPosts()); // I wish I could find a way to not have to call this...
-  // }
+  componentDidMount() {    
+    this.props.dispatch(fetchPosts()); // I wish I could find a way to not have to call this...
+    // removing this doesn't populate my posts state on page refreshes or redirects.
+  }
   render() {
     const {id} = this.props.match.params;
     return (

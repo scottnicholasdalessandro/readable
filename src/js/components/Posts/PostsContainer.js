@@ -19,7 +19,6 @@ class PostsContainer extends Component {
   componentDidMount() {
     this.props.dispatch(fetchPosts());
   }
-
   render() {
     return (
       <div>

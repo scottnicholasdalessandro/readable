@@ -5,20 +5,6 @@ import {connect} from 'react-redux';
 import {createPostAPI, updatePostAPI} from '../../actions/index';
 import {withRouter} from 'react-router';
 class PostEditForm extends Component {
-  // componentWillReceiveProps(prevProps) {
-  //   if (this.props.post.id !== prevProps.post.id) {
-  //     this.setState({
-  //       timestamp: prevProps.post.timestamp,
-
-  //       editing: prevProps.post.editing,
-  //       title: prevProps.post.title,
-  //       category: prevProps.post.category,
-  //       author: prevProps.post.author,
-  //       id: prevProps.post.id,
-  //       body: prevProps.post.body
-  //     });
-  //   }
-  // }
   state = {
     timestamp: this.props.post.timestamp || Date.now(),
     editing: this.props.editing || false,
@@ -46,9 +32,7 @@ class PostEditForm extends Component {
   };
 
   handleSubmit = event => {
-
     event.preventDefault();
-    debugger;
     const post = {
       ...this.state
     };
@@ -61,14 +45,10 @@ class PostEditForm extends Component {
     } else {
       this.props.dispatch(createPostAPI(post));
       this.clearFormInfo();
-      debugger;
-      this.props.history.push( `/${post.category}/${post.id}`);
-
-
-      // window.location.href = `/${post.category}/${post.id}`;
+      this.props.history.push(`/${post.category}/${post.id}`);
     }
   };
-  render() {    
+  render() {
     const {editing} = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
@@ -126,7 +106,6 @@ class PostEditForm extends Component {
     );
   }
 }
-
 
 // connecting so I can dispatch actions...is it better to pass dispatch down from
 // the parent component?

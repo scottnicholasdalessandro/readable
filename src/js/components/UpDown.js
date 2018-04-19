@@ -4,10 +4,14 @@ import {upDownUpdate} from '../actions/index';
 import PropTypes from 'prop-types';
 
 const UpDown = props => {
+  debugger;
   return (
     <div>
       <button
-        onClick={() => props.dispatch(upDownUpdate(props.id, 'upVote', props.scoreType))}
+        onClick={() => {
+          debugger;
+          props.dispatch(upDownUpdate(props.id, 'upVote', props.scoreType));
+        }}
         className="material-icons md-18"
       >
         thumb_up
